@@ -114,9 +114,8 @@ def fetch_metadata(args):
 
 
 def build_dataset(args):
-    # metadata = fetch_metadata(args)
-    # metadata.to_csv(args.csv_file, index=False)
-    metadata = pd.read_csv(args.csv_file)
+    metadata = fetch_metadata(args)
+    metadata.to_csv(args.csv_file, index=False)
     fetch_images(metadata, args.save_dir)
 
 
