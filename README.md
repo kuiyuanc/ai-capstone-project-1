@@ -1,5 +1,5 @@
 # Pixabay Image Dataset
-**Repository Link**: [GitHub Repository](https://github.com/YOUR_USERNAME/YOUR_REPO)
+**Repository Link**: [GitHub Repository](https://github.com/kuiyuanc/ai-capstone-project-1.git)
 
 ## Overview
 This dataset contains metadata and images collected from [Pixabay](https://pixabay.com), an open-source image platform. The dataset consists of **2,400 rows** of metadata and **2,329 corresponding images**. The discrepancy is due to **71 duplicate rows** in the metadata.
