@@ -68,3 +68,44 @@ This dataset can be used for various **computer vision** and **AI research tasks
 - **AI vs. Human Image Classification**
 - **Image Sentiment Analysis (based on tags and engagement metrics)**
 - **Feature Extraction for Style Transfer Models**
+
+## Data Collection
+The images and their metadata are downloaded from [Pixabay](https://pixabay.com) using an automated script (`crawl.py`).
+
+### Conditions
+- **Date**: 2025/03/18
+- **API Used**: [Pixabay API](https://pixabay.com/api/docs/)
+- **Collected Data**:
+  - Image metadata in `metadata.csv`
+  - Corresponding image files in `pixabay/` directory
+
+### Software Used
+- **Programming Language**: Python 3
+- **External Libraries**:
+  - `requests`: Handling API calls
+  - `pandas`: Processing metadata
+  - `tqdm`: Displaying progress bars
+
+### Detailed Process
+#### **1. Fetch Metadata**
+First, retrieve metadata using the Pixabay API:
+1. Sends API requests for images with different `content_type` and `image_type`.
+2. Retrieves metadata for each image, including **ID, tags, image type, views, downloads, likes, comments, and URL**.
+3. Stores the metadata in a CSV file (`metadata.csv`).
+
+- **Query Parameters Used**
+  - **Content Type**: `authentic`, `ai`
+  - **Image Type**: `photo`, `illustration`
+  - **Results per Page**: `200`
+  - **Number of Images per Category**: `600`
+  - **Order**: `popular` (default sorting order used by the Pixabay API, so implicitly used)
+- **Query Parameters Unused**
+  - **Category**
+  - **Colors**
+  - **Editor_Choice**
+
+#### **2. Download Images**
+Once metadata is collected, the script:
+1. Iterates through each image URL.
+2. Downloads images that **haven’t been previously downloaded**.
+3. Saves images in the `pixabay/` directory.
