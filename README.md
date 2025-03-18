@@ -13,7 +13,7 @@ The data were all collected at 2025/03/18.
 
 ## Dataset Composition
 The dataset includes images categorized by content type (human-authored vs. AI-generated) and image type (photo vs. illustration). Each combination contains **600 images**, but some of them are duplicated.
-The images corresponding to the metadata rows are stored in the `pixabay` directory, with each image named according to its unique ID (`<ID>.jpg`).
+The images corresponding to the metadata rows are stored in the `pixabay/` directory, with each image named according to its unique ID (`<ID>.jpg`).
 
 ### **Breakdown**
 - **Content Types**:
