@@ -39,33 +39,28 @@ def fetch_image(url, filepath):
     return successful
 
 
-def fetch_images(metadata: pd.DataFrame, save_dir):
+def fetch_images(metadata, image_dir):
     """
-    Downloads images from URLs specified in the metadata DataFrame and saves them to the specified directory.
+    Downloads images from URLs provided in the metadata DataFrame and saves them in the specified directory.
 
     Args:
         metadata (pd.DataFrame): DataFrame containing image metadata, including URLs and IDs.
-        save_dir (str): Directory where images will be saved.
+        image_dir (str): Directory where images will be saved.
 
     Returns:
         None
-
-    The function creates the directory if it doesn't exist, iterates through each row of the metadata,
-    constructs the file path using the image ID, and downloads the image if it hasn't been previously downloaded.
     """
-    # Ensure the save directory exists
-    os.makedirs(save_dir, exist_ok=True)
+    # Create the image directory if it doesn't exist
+    os.makedirs(image_dir, exist_ok=True)
 
-    # Iterate through each row in the metadata DataFrame
+    # Iterate over each row in the metadata DataFrame
     for _, row in tqdm(tuple(metadata.iterrows()), desc="Fetch images"):
-        # Extract the URL and ID for each image
+        # Extract the URL and generate the file path for the image
         url = row["URL"]
         filename = f"{row['ID']}.jpg"
+        filepath = os.path.join(image_dir, filename)
 
-        # Construct the file path
-        filepath = os.path.join(save_dir, filename)
-
-        # Download the image only if it doesn't already exist
+        # Check if the image has not already been downloaded
         if not os.path.exists(filepath):
             # Fetch and save the image
             fetch_image(url, filepath)
@@ -108,15 +103,17 @@ def make_query(params):
     return metadata
 
 
-def fetch_metadata(args):
+def fetch_metadata(api_key, per_page, num_images):
     """
-    Fetches metadata from the Pixabay API according to the given parameters and returns them as a pandas DataFrame.
+    Fetches metadata from the Pixabay API with the given API key and parameters.
 
     Args:
-        args (Namespace): Parsed command line arguments.
+        api_key (str): Pixabay API key.
+        per_page (int): Number of images to request per page.
+        num_images (int): Total number of images to fetch.
 
     Returns:
-        pd.DataFrame: DataFrame containing the metadata.
+        pd.DataFrame: DataFrame containing metadata for each of the images, including columns for ID, content type, image type, category, colors, editor choice, order, tags, views, downloads, likes, comments, and URL.
     """
     # Define the iterested values for content types, image types, orders
     CONTENT_TYPES = ("authentic", "ai")
@@ -146,7 +143,7 @@ def fetch_metadata(args):
     )
 
     metadata = []  # List to store metadata entries
-    params = {"key": args.api_key, "per_page": args.per_page}  # Base parameters for API query
+    params = {"key": api_key, "per_page": per_page}  # Base parameters for API query
 
     # Generate all possible combinations of the parameters
     param_combs = tuple(product(CONTENT_TYPES, IMAGE_TYPES, CATEGORIES, COLORS, EDITOR_CHOICES, ORDERS))
@@ -158,7 +155,7 @@ def fetch_metadata(args):
         params["image_type"] = image_type
 
         # Calculate the number of pages to request based on the number of images and images per page
-        for page in range(1, args.num_images // args.per_page + 1):
+        for page in range(1, num_images // per_page + 1):
             params["page"] = page  # Set the current page number
 
             # Make a query to the Pixabay API with the current parameters
@@ -190,19 +187,30 @@ def fetch_metadata(args):
 
 def build_dataset(args):
     """
-    Builds the dataset by reading the metadata from the given CSV file, and fetching the images using the URLs in the metadata.
+    Builds the dataset by fetching metadata and images from Pixabay and saving them.
 
     Args:
-        args (ArgumentParser): Object containing the following attributes:
-            csv_file (str): Path to the CSV file containing the metadata.
-            save_dir (str): Directory where the images should be saved.
+        args: An ArgumentParser object containing the parsed command line arguments.
 
     Returns:
         None
     """
-    metadata = fetch_metadata(args)
-    metadata.to_csv(args.csv_file, index=False)
-    fetch_images(metadata, args.save_dir)
+    csv_path = os.path.join(args.save_dir, args.csv_file)
+    image_dir = os.path.join(args.save_dir, args.image_dir)
+
+    # Load existing metadata from CSV if it already exists
+    if os.path.exists(csv_path):
+        metadata = pd.read_csv(csv_path)
+
+    # Otherwise, fetch metadata from Pixabay API
+    else:
+        metadata = fetch_metadata(args.api_key, args.per_page, args.num_images)
+
+        # Save the metadata to a CSV file
+        metadata.to_csv(csv_path, index=False)
+
+    # Fetch images from Pixabay based on the metadata
+    fetch_images(metadata, image_dir)
 
 
 def parse_args():
@@ -216,10 +224,13 @@ def parse_args():
         ArgumentParser: Object containing the parsed arguments.
     """
     # API Key for Pixabay API
-    API_KEY = "49378178-ce6d36965efbe00b94869088b"
+    API_KEY = "YOUR-API-KEY"
+
+    # Output directory for the metadata
+    SAVE_DIR = "data"
 
     # Output directory for the images
-    SAVE_DIR = "pixabay"
+    IMAGE_DIR = "images"
 
     # CSV file for storing the metadata
     CSV_FILE = "metadata.csv"
@@ -235,8 +246,11 @@ def parse_args():
     # Set the default API key
     parser.add_argument("--api_key", default=API_KEY, type=str, help="Pixabay API Key")
 
-    # Set the default output directory
-    parser.add_argument("--save_dir", default=SAVE_DIR, type=str, help="Output directory")
+    # Set the default output directory for the metadata
+    parser.add_argument("--save_dir", default=SAVE_DIR, type=str, help="Output directory for the metadata")
+
+    # Set the default output directory for the images
+    parser.add_argument("--image_dir", default=IMAGE_DIR, type=str, help="Output directory for the images")
 
     # Set the default CSV file for metadata
     parser.add_argument("--csv_file", default=CSV_FILE, type=str, help="CSV file for metadata")
