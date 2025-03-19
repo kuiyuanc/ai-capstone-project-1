@@ -6,7 +6,7 @@ This dataset contains metadata and images collected from [Pixabay](https://pixab
 
 ## Data Source
 - **External Source**: [Pixabay](https://pixabay.com)
-- **License**: Pixabay images are free to use under [their license](https://pixabay.com/service/terms/), but always verify terms before reuse.
+- **License**: Pixabay images are royalty-free to use under [their license](https://pixabay.com/service/terms/)
 
 ## Dataset Composition
 The dataset includes images categorized by content type (human-authored vs. AI-generated) and image type (photo vs. illustration). Each combination contains **600 images**, but some of them are duplicated.
