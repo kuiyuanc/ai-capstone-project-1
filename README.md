@@ -60,11 +60,6 @@ Comments: 23
 URL: https://pixabay.com/get/g48e481c8442bd6d9d70f4df16604de5da7f025b6e43a2f82e9a62ca297f65e26ce59a569bd906843c0f372d4561d9839ccd5598b6362ca334a26174e0304f5fa_1280.jpg
 ```
 
-## Usage
-This dataset can be used for various **computer vision** and **AI research tasks**, including:
-- **AI vs. Human Image Classification**
-- **Image Sentiment Analysis (based on tags and engagement metrics)**
-- **Feature Extraction for Style Transfer Models**
 
 ## Data Collection
 The images and their metadata are downloaded from [Pixabay](https://pixabay.com) using an automated script (`crawl.py`).
