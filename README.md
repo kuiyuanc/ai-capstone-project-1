@@ -59,7 +59,7 @@ Likes: 43
 Comments: 23
 URL: https://pixabay.com/get/g48e481c8442bd6d9d70f4df16604de5da7f025b6e43a2f82e9a62ca297f65e26ce59a569bd906843c0f372d4561d9839ccd5598b6362ca334a26174e0304f5fa_1280.jpg
 ```
-
+Here, `Category`, `Colors`, `Editor_Choice` are available query fields left unused. Therefore, all of them are left `Unknown` in this dataset.
 
 ## Data Collection
 The images and their metadata are downloaded from [Pixabay](https://pixabay.com) using an automated script (`crawl.py`).
