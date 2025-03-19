@@ -4,9 +4,6 @@
 ## Overview
 This dataset contains metadata and images collected from [Pixabay](https://pixabay.com), an open-source image platform. The dataset consists of **2,400 rows** of metadata and **2,329 corresponding images**. The discrepancy is due to **71 duplicate rows** in the metadata.
 
-## Date
-The data were all collected at 2025/03/18.
-
 ## Data Source
 - **External Source**: [Pixabay](https://pixabay.com)
 - **License**: Pixabay images are free to use under [their license](https://pixabay.com/service/terms/), but always verify terms before reuse.
