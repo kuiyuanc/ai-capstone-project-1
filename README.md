@@ -101,3 +101,8 @@ Once metadata is collected, the script:
 1. Iterates through each image URL.
 2. Downloads images that **haven’t been previously downloaded**.
 3. Saves images in the `images/` directory.
+
+### Tutorial
+```bash=
+python3 crawl.py
+```
