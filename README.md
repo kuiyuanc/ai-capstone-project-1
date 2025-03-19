@@ -10,7 +10,7 @@ This dataset contains metadata and images collected from [Pixabay](https://pixab
 
 ## Dataset Composition
 The dataset includes images categorized by content type (human-authored vs. AI-generated) and image type (photo vs. illustration). Each combination contains **600 images**, but some of them are duplicated.
-The images corresponding to the metadata rows are stored in the `pixabay/` directory, with each image named according to its unique ID (`<ID>.jpg`).
+The images corresponding to the metadata rows are stored in the `images/` directory, with each image named according to its unique ID (`<ID>.jpg`).
 
 ### **Breakdown**
 - **Content Types**:
@@ -74,7 +74,7 @@ The images and their metadata are downloaded from [Pixabay](https://pixabay.com)
 - **API Used**: [Pixabay API](https://pixabay.com/api/docs/)
 - **Collected Data**:
   - Image metadata in `metadata.csv`
-  - Corresponding image files in `pixabay/` directory
+  - Corresponding image files in `images/` directory
 
 ### Software Used
 - **Programming Language**: Python 3
@@ -105,4 +105,4 @@ First, retrieve metadata using the Pixabay API:
 Once metadata is collected, the script:
 1. Iterates through each image URL.
 2. Downloads images that **haven’t been previously downloaded**.
-3. Saves images in the `pixabay/` directory.
+3. Saves images in the `images/` directory.
